@@ -507,6 +507,8 @@ class SASTest {
                     OutgoingSASVerificationRequest.State.SHOW_SAS -> {
                         aliceSASLatch.countDown()
                     }
+
+                    else -> {}
                 }
             }
 
@@ -526,6 +528,8 @@ class SASTest {
                     IncomingSASVerificationTransaction.State.SHOW_ACCEPT -> {
                         tx.performAccept(bobSession)
                     }
+
+                    else -> {}
                 }
                 if (uxState === IncomingSASVerificationTransaction.State.SHOW_SAS) {
                     bobSASLatch.countDown()
@@ -580,6 +584,8 @@ class SASTest {
                     OutgoingSASVerificationRequest.State.VERIFIED -> {
                         aliceSASLatch.countDown()
                     }
+
+                    else -> {}
                 }
             }
 
@@ -605,6 +611,8 @@ class SASTest {
                     IncomingSASVerificationTransaction.State.VERIFIED -> {
                         bobSASLatch.countDown()
                     }
+
+                    else -> {}
                 }
             }
 
