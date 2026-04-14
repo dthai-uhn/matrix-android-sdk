@@ -194,7 +194,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
     // olm lib is now hosted by jitpack: https://jitpack.io/#org.matrix.gitlab.matrix-org/olm
-    implementation 'org.matrix.gitlab.matrix-org:olm:3.1.5'
+    implementation 'org.matrix.gitlab.matrix-org:olm:3.2.6'
 
     // Database
     kapt 'com.github.cmelchior:realmfieldnameshelper:1.1.1'
