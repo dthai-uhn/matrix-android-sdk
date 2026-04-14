@@ -59,6 +59,14 @@ android {
         include "**/*Test.class" // whatever Ant pattern matches your test class files
     }
 
+    publishing {
+        singleVariant("release") {
+            // Required to publish with aar
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
     android.libraryVariants.all { variant ->
         task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
             source = android.sourceSets.main.java.srcDirs
