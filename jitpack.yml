@@ -1,6 +1,4 @@
 jdk:
   - openjdk11
-before_install:
-  - sdk install gradle 7.6.1 || true
 install:
   - ./gradlew :matrix-sdk:assembleRelease :matrix-sdk-crypto:assembleRelease :matrix-sdk-core:assembleRelease

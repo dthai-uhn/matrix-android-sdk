@@ -46,6 +46,18 @@ allprojects {
     }
 }
 
+// Disable Android test tasks on JitPack CI — the olm library is GitLab-backed on JitPack
+// and cannot be resolved from within JitPack's own build sandbox.
+if (System.getenv("JITPACK")) {
+    subprojects {
+        afterEvaluate {
+            tasks.matching { it.name.contains("AndroidTest") }.configureEach {
+                enabled = false
+            }
+        }
+    }
+}
+
 apply plugin: 'org.sonarqube'
 
 sonarqube {
