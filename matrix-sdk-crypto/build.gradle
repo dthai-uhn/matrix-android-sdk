@@ -17,7 +17,7 @@ buildscript {
 
 android {
     namespace 'org.matrix.androidsdk.crypto'
-    compileSdkVersion 29
+    compileSdk 33
 
     defaultConfig {
         minSdkVersion 16

@@ -23,7 +23,7 @@ buildscript {
 
 android {
     namespace 'org.matrix.androidsdk'
-    compileSdkVersion 29
+    compileSdk 33
 
     packagingOptions {
         exclude 'LICENSE.txt'
