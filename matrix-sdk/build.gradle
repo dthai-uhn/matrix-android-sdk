@@ -7,14 +7,22 @@ apply plugin: 'kotlin-android-extensions'
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
+        maven { url "https://nexus2.ehealthinnovation.org/repository/jcenter/" }
+        maven {
+            url "https://github.com/vector-im/jitsi_libre_maven/raw/master/android-sdk-2.9.3"
+            // Note: to test Jitsi release you can use a local file like this:
+            // url "file:///Users/bmarty/workspaces/jitsi_libre_maven/android-sdk-2.9.3"
+        }
     }
 
     dependencies {
-        classpath "io.realm:realm-gradle-plugin:5.12.0"
+        classpath "io.realm:realm-gradle-plugin:10.19.0"
     }
 }
 
 android {
+    namespace 'org.matrix.androidsdk'
     compileSdkVersion 29
 
     packagingOptions {
@@ -29,10 +37,15 @@ android {
         targetSdkVersion 29
         versionCode 937
         versionName "0.9.37-dev"
+        buildConfigField "String", "VERSION_NAME", "\"0.9.37-dev\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // Enable multi dex for test
         multiDexEnabled true
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
@@ -94,7 +107,7 @@ android {
     }
 
 
-    lintOptions {
+    lint {
         warning 'MissingTranslation'
 
         // Treat some warnings as errors
@@ -172,10 +185,10 @@ dependencies {
     implementation 'org.matrix.gitlab.matrix-org:olm:3.1.2'
 
     // Database
-    kapt 'dk.ilios:realmfieldnameshelper:1.1.1'
+    kapt 'com.github.cmelchior:realmfieldnameshelper:1.1.1'
 
     // WebRTC
-    implementation('com.facebook.react:react-native-webrtc:1.69.2-jitsi-2062090@aar')
+    implementation('com.facebook.react:react-native-webrtc:1.69.1-jitsi-1696176@aar')
 
     // Test
     testImplementation 'androidx.test:runner:1.2.0'

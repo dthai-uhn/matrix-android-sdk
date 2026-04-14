@@ -6,14 +6,17 @@ apply plugin: 'realm-android'
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
+        maven { url "https://nexus2.ehealthinnovation.org/repository/jcenter/" }
     }
 
     dependencies {
-        classpath "io.realm:realm-gradle-plugin:5.12.0"
+        classpath "io.realm:realm-gradle-plugin:10.19.0"
     }
 }
 
 android {
+    namespace 'org.matrix.androidsdk.crypto'
     compileSdkVersion 29
 
     defaultConfig {
@@ -58,7 +61,7 @@ dependencies {
     implementation "com.google.code.gson:gson:$gson_version"
 
     // Database
-    kapt 'dk.ilios:realmfieldnameshelper:1.1.1'
+    kapt 'com.github.cmelchior:realmfieldnameshelper:1.1.1'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
