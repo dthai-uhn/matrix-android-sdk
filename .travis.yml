@@ -9,7 +9,7 @@
 # - Auto cancel pull request builds      -> On
 
 language: android
-jdk: oraclejdk8
+jdk: oraclejdk11
 sudo: false
 
 notifications:
