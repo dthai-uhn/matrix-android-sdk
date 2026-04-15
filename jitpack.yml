@@ -1,4 +1,4 @@
 jdk:
   - openjdk11
 install:
-  - ./gradlew :matrix-sdk:assembleRelease :matrix-sdk-crypto:assembleRelease :matrix-sdk-core:assembleRelease
+  - ./gradlew publishToMavenLocal
