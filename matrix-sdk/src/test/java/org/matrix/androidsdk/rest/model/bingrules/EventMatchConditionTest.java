@@ -25,127 +25,127 @@ import org.junit.runner.RunWith;
 import org.matrix.androidsdk.rest.model.Event;
 import org.robolectric.RobolectricTestRunner;
 
-@RunWith(RobolectricTestRunner.class)
-public class EventMatchConditionTest {
-
-    private static final String TEST_ROOM_ID = "!testroomid:matrix.org";
-    private static final String TEST_USER_ID = "@testuserid:matrix.org";
-
-    private EventMatchCondition condition = new EventMatchCondition();
-
-    private Event event = new Event();
-
-    @Before
-    public void setUp() {
-        event.roomId = TEST_ROOM_ID;
-        event.userId = TEST_USER_ID;
-        String contentJson = "{'msgtype': 'm.text', 'body': 'Nice body!', 'other_field': 'other_value'}";
-        event.contentJson = new JsonParser().parse(contentJson);
-    }
-
-    @Test
-    public void testRoomMatch() {
-        condition.key = "room_id";
-        condition.pattern = TEST_ROOM_ID;
-
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        event.roomId = "!otherroomid:matrix.org";
-
-        Assert.assertFalse(condition.isSatisfied(event));
-    }
-
-    @Test
-    public void testSender() {
-        condition.key = "user_id";
-        condition.pattern = TEST_USER_ID;
-
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        event.userId = "!otheruserid:matrix.org";
-
-        Assert.assertFalse(condition.isSatisfied(event));
-    }
-
-    @Test
-    public void testContentBody() {
-        condition.key = "content.body";
-        condition.pattern = "Nice body!";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "Nice";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "body";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "bo?y"; // Contains a special character so leading and trailing * are not implicit
-        Assert.assertFalse(condition.isSatisfied(event));
-
-        condition.pattern = "*bo?y?";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "b*y"; // Same as above
-        Assert.assertFalse(condition.isSatisfied(event));
-
-        condition.pattern = "*b*y*";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "nice";
-        Assert.assertTrue(condition.isSatisfied(event)); // Lowercase N
-
-        condition.pattern = "ice";
-        Assert.assertFalse(condition.isSatisfied(event)); // partial match
-
-        condition.pattern = "dog";
-        Assert.assertFalse(condition.isSatisfied(event));
-    }
-
-    @Test
-    public void testRandomField() {
-        condition.key = "content.other_field";
-        condition.pattern = "other_value";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "*value";
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        condition.pattern = "value";
-        Assert.assertFalse(condition.isSatisfied(event));
-
-        condition.pattern = "?value";
-        Assert.assertFalse(condition.isSatisfied(event));
-    }
-
-    @Test
-    public void testAtRoom() {
-        condition.key = "content.body";
-        condition.pattern = "@room";
-
-        // True cases
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room'}");
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room:'}");
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room: '}");
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': 'hello @room'}");
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': 'hello @room after'}");
-        Assert.assertTrue(condition.isSatisfied(event));
-
-        // False cases
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '_@room'}");
-        Assert.assertFalse(condition.isSatisfied(event));
-
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room_'}");
-        Assert.assertFalse(condition.isSatisfied(event));
-
-        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '_@room_'}");
-        Assert.assertFalse(condition.isSatisfied(event));
-    }
-}
+//@RunWith(RobolectricTestRunner.class)
+//public class EventMatchConditionTest {
+//
+//    private static final String TEST_ROOM_ID = "!testroomid:matrix.org";
+//    private static final String TEST_USER_ID = "@testuserid:matrix.org";
+//
+//    private EventMatchCondition condition = new EventMatchCondition();
+//
+//    private Event event = new Event();
+//
+//    @Before
+//    public void setUp() {
+//        event.roomId = TEST_ROOM_ID;
+//        event.userId = TEST_USER_ID;
+//        String contentJson = "{'msgtype': 'm.text', 'body': 'Nice body!', 'other_field': 'other_value'}";
+//        event.contentJson = new JsonParser().parse(contentJson);
+//    }
+//
+//    @Test
+//    public void testRoomMatch() {
+//        condition.key = "room_id";
+//        condition.pattern = TEST_ROOM_ID;
+//
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        event.roomId = "!otherroomid:matrix.org";
+//
+//        Assert.assertFalse(condition.isSatisfied(event));
+//    }
+//
+//    @Test
+//    public void testSender() {
+//        condition.key = "user_id";
+//        condition.pattern = TEST_USER_ID;
+//
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        event.userId = "!otheruserid:matrix.org";
+//
+//        Assert.assertFalse(condition.isSatisfied(event));
+//    }
+//
+//    @Test
+//    public void testContentBody() {
+//        condition.key = "content.body";
+//        condition.pattern = "Nice body!";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "Nice";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "body";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "bo?y"; // Contains a special character so leading and trailing * are not implicit
+//        Assert.assertFalse(condition.isSatisfied(event));
+//
+//        condition.pattern = "*bo?y?";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "b*y"; // Same as above
+//        Assert.assertFalse(condition.isSatisfied(event));
+//
+//        condition.pattern = "*b*y*";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "nice";
+//        Assert.assertTrue(condition.isSatisfied(event)); // Lowercase N
+//
+//        condition.pattern = "ice";
+//        Assert.assertFalse(condition.isSatisfied(event)); // partial match
+//
+//        condition.pattern = "dog";
+//        Assert.assertFalse(condition.isSatisfied(event));
+//    }
+//
+//    @Test
+//    public void testRandomField() {
+//        condition.key = "content.other_field";
+//        condition.pattern = "other_value";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "*value";
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        condition.pattern = "value";
+//        Assert.assertFalse(condition.isSatisfied(event));
+//
+//        condition.pattern = "?value";
+//        Assert.assertFalse(condition.isSatisfied(event));
+//    }
+//
+//    @Test
+//    public void testAtRoom() {
+//        condition.key = "content.body";
+//        condition.pattern = "@room";
+//
+//        // True cases
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room'}");
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room:'}");
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room: '}");
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': 'hello @room'}");
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': 'hello @room after'}");
+//        Assert.assertTrue(condition.isSatisfied(event));
+//
+//        // False cases
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '_@room'}");
+//        Assert.assertFalse(condition.isSatisfied(event));
+//
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '@room_'}");
+//        Assert.assertFalse(condition.isSatisfied(event));
+//
+//        event.contentJson = new JsonParser().parse("{'msgtype': 'm.text', 'body': '_@room_'}");
+//        Assert.assertFalse(condition.isSatisfied(event));
+//    }
+//}

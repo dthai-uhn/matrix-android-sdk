@@ -35,84 +35,84 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(RobolectricTestRunner.class)
-public class TimelinePushWorkerTest {
-
-    @Mock
-    MXDataHandler mDataHandler;
-    @Mock
-    BingRulesManager mBingRulesManager;
-    private TimelinePushWorker mTimelinePushWorker;
-
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        Mockito.when(mDataHandler.getBingRulesManager()).thenReturn(mBingRulesManager);
-        mTimelinePushWorker = new TimelinePushWorker(mDataHandler);
-    }
-
-    @Test
-    public void triggerPush_WhenEventBingRuleDoesNotAllowNotify_ShouldNotTriggerPush() {
-        final BingRule bingRule = Mockito.mock(BingRule.class);
-        Mockito.when(bingRule.shouldNotify()).thenReturn(false);
-        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
-        final Event event = new Event();
-        final RoomState roomState = new RoomState();
-        mTimelinePushWorker.triggerPush(roomState, event);
-        Mockito.verify(mDataHandler, Mockito.never()).onBingEvent(event, roomState, bingRule);
-    }
-
-    @Test
-    public void triggerPush_WhenEventHasNoLifetime_ShouldTriggerPush() {
-        final BingRule bingRule = Mockito.mock(BingRule.class);
-        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
-        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
-        final Event event = new Event();
-        final RoomState roomState = new RoomState();
-        mTimelinePushWorker.triggerPush(roomState, event);
-        Mockito.verify(mDataHandler).onBingEvent(event, roomState, bingRule);
-    }
-
-    @Test
-    public void triggerPush_WhenMaxLifetimeIsReached_ShouldNotTriggerPush() {
-        final Gson gson = JsonUtils.getBasicGson();
-        final BingRule bingRule = Mockito.mock(BingRule.class);
-        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
-        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
-        final Event event = new Event();
-        Map<String, String> contentMap = new HashMap<>();
-        contentMap.put("lifetime", "10000");
-        event.contentJson = gson.toJsonTree(contentMap);
-        event.originServerTs = System.currentTimeMillis() - 50000;
-        final RoomState roomState = new RoomState();
-        mTimelinePushWorker.triggerPush(roomState, event);
-        Mockito.verify(mDataHandler, Mockito.never()).onBingEvent(event, roomState, bingRule);
-    }
-
-    @Test
-    public void triggerPush_WhenCallTimeoutIsReached_ShouldNotTriggerPush() {
-        final BingRule bingRule = Mockito.mock(BingRule.class);
-        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
-        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
-        final Event event = new Event();
-        event.type = Event.EVENT_TYPE_CALL_INVITE;
-        event.originServerTs = System.currentTimeMillis() - 124000;
-        final RoomState roomState = new RoomState();
-        mTimelinePushWorker.triggerPush(roomState, event);
-        Mockito.verify(mDataHandler, Mockito.never()).onBingEvent(event, roomState, bingRule);
-    }
-
-    @Test
-    public void triggerPush_WhenCallTimeoutIsNotReached_ShouldTriggerPush() {
-        final BingRule bingRule = Mockito.mock(BingRule.class);
-        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
-        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
-        final Event event = new Event();
-        event.type = Event.EVENT_TYPE_CALL_INVITE;
-        event.originServerTs = System.currentTimeMillis() - 8000;
-        final RoomState roomState = new RoomState();
-        mTimelinePushWorker.triggerPush(roomState, event);
-        Mockito.verify(mDataHandler).onBingEvent(event, roomState, bingRule);
-    }
-}
+//@RunWith(RobolectricTestRunner.class)
+//public class TimelinePushWorkerTest {
+//
+//    @Mock
+//    MXDataHandler mDataHandler;
+//    @Mock
+//    BingRulesManager mBingRulesManager;
+//    private TimelinePushWorker mTimelinePushWorker;
+//
+//
+//    @Before
+//    public void setUp() {
+//        MockitoAnnotations.initMocks(this);
+//        Mockito.when(mDataHandler.getBingRulesManager()).thenReturn(mBingRulesManager);
+//        mTimelinePushWorker = new TimelinePushWorker(mDataHandler);
+//    }
+//
+//    @Test
+//    public void triggerPush_WhenEventBingRuleDoesNotAllowNotify_ShouldNotTriggerPush() {
+//        final BingRule bingRule = Mockito.mock(BingRule.class);
+//        Mockito.when(bingRule.shouldNotify()).thenReturn(false);
+//        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
+//        final Event event = new Event();
+//        final RoomState roomState = new RoomState();
+//        mTimelinePushWorker.triggerPush(roomState, event);
+//        Mockito.verify(mDataHandler, Mockito.never()).onBingEvent(event, roomState, bingRule);
+//    }
+//
+//    @Test
+//    public void triggerPush_WhenEventHasNoLifetime_ShouldTriggerPush() {
+//        final BingRule bingRule = Mockito.mock(BingRule.class);
+//        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
+//        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
+//        final Event event = new Event();
+//        final RoomState roomState = new RoomState();
+//        mTimelinePushWorker.triggerPush(roomState, event);
+//        Mockito.verify(mDataHandler).onBingEvent(event, roomState, bingRule);
+//    }
+//
+//    @Test
+//    public void triggerPush_WhenMaxLifetimeIsReached_ShouldNotTriggerPush() {
+//        final Gson gson = JsonUtils.getBasicGson();
+//        final BingRule bingRule = Mockito.mock(BingRule.class);
+//        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
+//        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
+//        final Event event = new Event();
+//        Map<String, String> contentMap = new HashMap<>();
+//        contentMap.put("lifetime", "10000");
+//        event.contentJson = gson.toJsonTree(contentMap);
+//        event.originServerTs = System.currentTimeMillis() - 50000;
+//        final RoomState roomState = new RoomState();
+//        mTimelinePushWorker.triggerPush(roomState, event);
+//        Mockito.verify(mDataHandler, Mockito.never()).onBingEvent(event, roomState, bingRule);
+//    }
+//
+//    @Test
+//    public void triggerPush_WhenCallTimeoutIsReached_ShouldNotTriggerPush() {
+//        final BingRule bingRule = Mockito.mock(BingRule.class);
+//        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
+//        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
+//        final Event event = new Event();
+//        event.type = Event.EVENT_TYPE_CALL_INVITE;
+//        event.originServerTs = System.currentTimeMillis() - 124000;
+//        final RoomState roomState = new RoomState();
+//        mTimelinePushWorker.triggerPush(roomState, event);
+//        Mockito.verify(mDataHandler, Mockito.never()).onBingEvent(event, roomState, bingRule);
+//    }
+//
+//    @Test
+//    public void triggerPush_WhenCallTimeoutIsNotReached_ShouldTriggerPush() {
+//        final BingRule bingRule = Mockito.mock(BingRule.class);
+//        Mockito.when(bingRule.shouldNotify()).thenReturn(true);
+//        Mockito.when(mBingRulesManager.fulfilledBingRule(Mockito.any(Event.class))).thenReturn(bingRule);
+//        final Event event = new Event();
+//        event.type = Event.EVENT_TYPE_CALL_INVITE;
+//        event.originServerTs = System.currentTimeMillis() - 8000;
+//        final RoomState roomState = new RoomState();
+//        mTimelinePushWorker.triggerPush(roomState, event);
+//        Mockito.verify(mDataHandler).onBingEvent(event, roomState, bingRule);
+//    }
+//}

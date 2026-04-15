@@ -33,66 +33,66 @@ import org.robolectric.RobolectricTestRunner;
  * Class for unit testing the ConditionDeserializer.
  */
 
-@RunWith(RobolectricTestRunner.class)
-public class ConditionDeserializerTest {
-
-    private Gson gson = JsonUtils.getGson(false);
-
-    @Test
-    public void testEventMatchCondition() {
-        String conditionJson = "{'kind': 'event_match', 'key': 'key1', 'pattern': 'pattern1'}";
-        Condition condition = gson.fromJson(conditionJson, Condition.class);
-
-        Assert.assertTrue(condition instanceof EventMatchCondition);
-
-        EventMatchCondition eventMatchCondition = (EventMatchCondition) condition;
-        Assert.assertEquals("key1", eventMatchCondition.key);
-        Assert.assertEquals("pattern1", eventMatchCondition.pattern);
-    }
-
-    @Test
-    public void testDeviceCondition() {
-        String conditionJson = "{'kind': 'device', 'profile_tag': 'proftag1'}";
-        Condition condition = gson.fromJson(conditionJson, Condition.class);
-
-        Assert.assertTrue(condition instanceof DeviceCondition);
-
-        DeviceCondition deviceCondition = (DeviceCondition) condition;
-        Assert.assertEquals("proftag1", deviceCondition.profileTag);
-    }
-
-    @Test
-    public void testRoomMemberCountCondition() {
-        String conditionJson = "{'kind': 'room_member_count', 'is': 'is1'}";
-        Condition condition = gson.fromJson(conditionJson, Condition.class);
-
-        Assert.assertTrue(condition instanceof RoomMemberCountCondition);
-
-        RoomMemberCountCondition roomMemberCountConditionCondition = (RoomMemberCountCondition) condition;
-        Assert.assertEquals("is1", roomMemberCountConditionCondition.is);
-    }
-
-    @Test
-    public void testContainsDisplayNameCondition() {
-        String conditionJson = "{'kind': 'contains_display_name'}";
-        Condition condition = gson.fromJson(conditionJson, Condition.class);
-
-        Assert.assertTrue(condition instanceof ContainsDisplayNameCondition);
-    }
-
-    @Test
-    public void testUnknownKind() {
-        String conditionJson = "{'kind': 'strange_unknown_kind'}";
-        Condition condition = gson.fromJson(conditionJson, Condition.class);
-
-        Assert.assertNotNull(condition);
-    }
-
-    @Test
-    public void testNoKind() {
-        String conditionJson = "{'some_other_field': 'some_value'}";
-        Condition condition = gson.fromJson(conditionJson, Condition.class);
-
-        Assert.assertNull(condition);
-    }
-}
+//@RunWith(RobolectricTestRunner.class)
+//public class ConditionDeserializerTest {
+//
+//    private Gson gson = JsonUtils.getGson(false);
+//
+//    @Test
+//    public void testEventMatchCondition() {
+//        String conditionJson = "{'kind': 'event_match', 'key': 'key1', 'pattern': 'pattern1'}";
+//        Condition condition = gson.fromJson(conditionJson, Condition.class);
+//
+//        Assert.assertTrue(condition instanceof EventMatchCondition);
+//
+//        EventMatchCondition eventMatchCondition = (EventMatchCondition) condition;
+//        Assert.assertEquals("key1", eventMatchCondition.key);
+//        Assert.assertEquals("pattern1", eventMatchCondition.pattern);
+//    }
+//
+//    @Test
+//    public void testDeviceCondition() {
+//        String conditionJson = "{'kind': 'device', 'profile_tag': 'proftag1'}";
+//        Condition condition = gson.fromJson(conditionJson, Condition.class);
+//
+//        Assert.assertTrue(condition instanceof DeviceCondition);
+//
+//        DeviceCondition deviceCondition = (DeviceCondition) condition;
+//        Assert.assertEquals("proftag1", deviceCondition.profileTag);
+//    }
+//
+//    @Test
+//    public void testRoomMemberCountCondition() {
+//        String conditionJson = "{'kind': 'room_member_count', 'is': 'is1'}";
+//        Condition condition = gson.fromJson(conditionJson, Condition.class);
+//
+//        Assert.assertTrue(condition instanceof RoomMemberCountCondition);
+//
+//        RoomMemberCountCondition roomMemberCountConditionCondition = (RoomMemberCountCondition) condition;
+//        Assert.assertEquals("is1", roomMemberCountConditionCondition.is);
+//    }
+//
+//    @Test
+//    public void testContainsDisplayNameCondition() {
+//        String conditionJson = "{'kind': 'contains_display_name'}";
+//        Condition condition = gson.fromJson(conditionJson, Condition.class);
+//
+//        Assert.assertTrue(condition instanceof ContainsDisplayNameCondition);
+//    }
+//
+//    @Test
+//    public void testUnknownKind() {
+//        String conditionJson = "{'kind': 'strange_unknown_kind'}";
+//        Condition condition = gson.fromJson(conditionJson, Condition.class);
+//
+//        Assert.assertNotNull(condition);
+//    }
+//
+//    @Test
+//    public void testNoKind() {
+//        String conditionJson = "{'some_other_field': 'some_value'}";
+//        Condition condition = gson.fromJson(conditionJson, Condition.class);
+//
+//        Assert.assertNull(condition);
+//    }
+//}

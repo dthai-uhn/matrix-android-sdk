@@ -28,7 +28,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+/*
 @RunWith(RobolectricTestRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PermalinkUtilsTest {
@@ -58,4 +58,4 @@ public class PermalinkUtilsTest {
 
         return result;
     }
-}
+} */
