@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
 
 android {
     namespace 'org.matrix.androidsdk.core'
@@ -70,4 +71,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "org.ehealthinnovation"
+                artifactId = project.name
+                version = project.version != 'unspecified' ? project.version : '1.0'
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
 }

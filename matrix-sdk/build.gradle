@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
 
 buildscript {
     repositories {
@@ -218,4 +219,20 @@ dependencies {
 
     // Enable multi dex for test
     implementation 'androidx.multidex:multidex:2.0.1'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "org.ehealthinnovation"
+                artifactId = project.name
+                version = project.version != 'unspecified' ? project.version : android.defaultConfig.versionName
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
 }

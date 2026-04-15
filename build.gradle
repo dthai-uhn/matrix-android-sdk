@@ -46,30 +46,6 @@ allprojects {
     }
 }
 
-subprojects {
-    afterEvaluate {
-        if (plugins.hasPlugin('com.android.library')) {
-            apply plugin: 'maven-publish'
-
-            publishing {
-                publications {
-                    release(MavenPublication) {
-                        from components.release
-                        groupId = 'com.github.dthai-uhn.matrix-android-sdk'
-                        artifactId = project.name
-                        // Use the tag version injected by JitPack, fall back to the module's versionName
-                        version = (project.version != 'unspecified')
-                                ? project.version
-                                : (android.defaultConfig.versionName ?: '1.0')
-                    }
-                }
-                repositories {
-                    mavenLocal()
-                }
-            }
-        }
-    }
-}
 
 // Disable Android test tasks on JitPack CI — the olm library is GitLab-backed on JitPack
 // and cannot be resolved from within JitPack's own build sandbox.
